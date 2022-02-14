@@ -7,7 +7,7 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity( ) {
+class MainActivity : StudentsDeleter, AppCompatActivity( ) {
 
     private val TAG = "MainActivity"
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity( ) {
         bSave      = findViewById( R.id.bSave )
         rvStudents = findViewById( R.id.rvStudents )
         rvStudents.layoutManager = LinearLayoutManager( this )
-        rvStudents.adapter = StudentsAdapter( students, this )
+        rvStudents.adapter = StudentsAdapter( students, this, this )
     }
 
     fun setupListeners( ) {
@@ -65,6 +65,11 @@ class MainActivity : AppCompatActivity( ) {
 
     private fun refreshStudentsList( ) {
         rvStudents.adapter?.notifyDataSetChanged( )
+    }
+
+    override fun deleteStudent(s : Student ) {
+        students.remove( s )
+        refreshStudentsList( )
     }
 
     private fun clearFields( ) {
